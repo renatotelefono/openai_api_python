@@ -1,0 +1,89 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<header>
+	<nav>
+		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<div class="internal-links">
+			<HeaderLink href="/">Home</HeaderLink>
+			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/about">About</HeaderLink>
+		</div>
+		<div class="social-links">
+			<a href="https://m.webtoo.ls/@astro" target="_blank">
+				<span class="sr-only">Follow Astro on Mastodon</span>
+				<svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <!-- Contorno quadrato con angoli arrotondati -->
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <!-- Cerchio centrale -->
+  <circle cx="12" cy="12" r="5"/>
+  <!-- Piccolo cerchio superiore destro -->
+  <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+</svg>
+
+			</a>
+			<a href="https://twitter.com/astrodotbuild" target="_blank">
+				<span class="sr-only">Follow Astro on Twitter</span>
+				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
+					><path
+						fill="currentColor"
+						d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316 l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"
+						
+					></path></svg
+				>
+			</a>
+			<a href="https://github.com/withastro/astro" target="_blank">
+				<span class="sr-only">Go to Astro's GitHub repo</span>
+				<svg viewBox="0 0 24 24" aria-hidden="true" width="32" height="32"
+					><path
+						fill="currentColor"
+						d="M23.498 6.186a2.955 2.955 0 0 0-2.08-2.09C19.423 3.5 12 3.5 12 3.5s-7.423 0-9.418.596a2.955 2.955 0 0 0-2.08 2.09A30.03 30.03 0 0 0 0 12a30.03 30.03 0 0 0 .502 5.814 2.955 2.955 0 0 0 2.08 2.09c1.995.595 9.418.595 9.418.595s7.423 0 9.418-.595a2.955 2.955 0 0 0 2.08-2.09A30.03 30.03 0 0 0 24 12a30.03 30.03 0 0 0-.502-5.814Zm-14.998 8.44V9.374l6.136 2.626-6.136 2.626Z"
+					></path></svg
+				>
+			</a>
+		</div>
+	</nav>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0 1em;
+		background: white;
+		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+	}
+	h2 {
+		margin: 0;
+		font-size: 1em;
+	}
+
+	h2 a,
+	h2 a.active {
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	nav a {
+		padding: 1em 0.5em;
+		color: var(--black);
+		border-bottom: 4px solid transparent;
+		text-decoration: none;
+	}
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+	.social-links,
+	.social-links a {
+		display: flex;
+	}
+	@media (max-width: 720px) {
+		.social-links {
+			display: none;
+		}
+	}
+</style>

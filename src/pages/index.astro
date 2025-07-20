@@ -1,0 +1,106 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
+---
+
+<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+<ConsentBanner />
+<GoogleAnalytics />
+
+<!-- Font esoterici -->
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Cinzel&display=swap" rel="stylesheet" />
+
+<Header />
+
+<main class="main-content">
+  
+  
+  
+  
+  <h1 class="main-title">
+    ✦ Questo è il posto che cercavi ✦
+  </h1>
+
+  <img src="/assets/esoteric.png" alt="Un posto esoterico" width="600" class="main-image" />
+
+  <p class="intro-text">Seguendo il mio percorso capirai tante cose</p>
+
+  <p class="intro-text">
+    Clicca <a href="/blog" class="blog-link">QUI</a> e vedrai delle storie incredibili
+  </p>
+
+  <p class="intro-quote">“Come in alto, così in basso.” — Tavola di Smeraldo</p>
+</main>
+
+<Footer />
+
+<style>
+  body {
+    background-color: #0d1b2a;
+    color: #c0a36e;
+    font-family: 'Cinzel', serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/assets/stars-bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+  }
+
+  .main-content {
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+
+  .main-title {
+    font-family: 'UnifrakturCook', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px #c0a36e;
+  }
+
+  .main-image {
+    border: 2px solid #c0a36e;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(192, 163, 110, 0.5);
+    margin: 2rem 0;
+  }
+
+  .intro-text {
+    font-size: 1.3em;
+    margin: 1rem 0;
+  }
+
+  .blog-link {
+    font-weight: bold;
+    color: #ddb892;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .blog-link:hover {
+    color: #ff0000;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff3333, 0 0 20px #ff6666;
+  }
+
+  .intro-quote {
+    font-style: italic;
+    color: #ddb892;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    .main-image {
+      width: 90%;
+    }
+
+    .main-title {
+      font-size: 2rem;
+    }
+  }
+</style>

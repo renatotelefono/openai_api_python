@@ -1,0 +1,61 @@
+---
+const today = new Date();
+---
+
+<footer>
+	&copy; {today.getFullYear()} Benjamin Raspail. All rights reserved.
+	<div class="social-links">
+		<a href="https://m.webtoo.ls/@astro" target="_blank">
+			<span class="sr-only">Follow Astro on Mastodon</span>
+			<svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <!-- Contorno quadrato con angoli arrotondati -->
+  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+  <!-- Cerchio centrale -->
+  <circle cx="12" cy="12" r="5"/>
+  <!-- Piccolo cerchio superiore destro -->
+  <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+</svg>
+
+		
+		</a>
+		<a href="https://twitter.com/astrodotbuild" target="_blank">
+			<span class="sr-only">Follow Astro on Twitter</span>
+			<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/twitter"
+				><path
+					fill="currentColor"
+					d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316 l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"
+				></path></svg
+			>
+		</a>
+		<a href="https://github.com/withastro/astro" target="_blank">
+			<span class="sr-only">Go to Astro's GitHub repo</span>
+			<svg viewBox="0 0 24 24" aria-hidden="true" width="32" height="32" astro-icon="social/github"
+				><path
+					fill="currentColor"
+					d="M23.498 6.186a2.955 2.955 0 0 0-2.08-2.09C19.423 3.5 12 3.5 12 3.5s-7.423 0-9.418.596a2.955 2.955 0 0 0-2.08 2.09A30.03 30.03 0 0 0 0 12a30.03 30.03 0 0 0 .502 5.814 2.955 2.955 0 0 0 2.08 2.09c1.995.595 9.418.595 9.418.595s7.423 0 9.418-.595a2.955 2.955 0 0 0 2.08-2.09A30.03 30.03 0 0 0 24 12a30.03 30.03 0 0 0-.502-5.814Zm-14.998 8.44V9.374l6.136 2.626-6.136 2.626Z"
+				></path></svg
+			>
+		</a>
+	</div>
+</footer>
+<style>
+	footer {
+		padding: 2em 1em 6em 1em;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+	.social-links {
+		display: flex;
+		justify-content: center;
+		gap: 1em;
+		margin-top: 1em;
+	}
+	.social-links a {
+		text-decoration: none;
+		color: rgb(var(--gray));
+	}
+	.social-links a:hover {
+		color: rgb(var(--gray-dark));
+	}
+</style>
