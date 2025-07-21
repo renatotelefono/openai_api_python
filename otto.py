@@ -12,7 +12,9 @@ from io import BytesIO
 load_dotenv()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Lista di paesi europei
+REPO_OWNER = "renatotelefono"
+REPO_NAME = "astro_9"
+
 european_countries = [
     "Italia", "Francia", "Germania", "Spagna", "Inghilterra", "Polonia",
     "Ungheria", "Romania", "Grecia", "Portogallo", "Austria", "Svezia",
@@ -20,7 +22,6 @@ european_countries = [
     "Repubblica Ceca", "Slovacchia", "Croazia", "Bulgaria", "Danimarca"
 ]
 
-# Genera un nome realistico
 def generate_random_profile():
     country = random.choice(european_countries)
     birth_year = random.randint(1400, 1980)
@@ -43,7 +44,6 @@ def generate_random_profile():
     full_name = response.choices[0].message.content.strip().replace("\n", "")
     return full_name, country, birth_year, gender
 
-# Genera storia esoterica
 def generate_occult_story(name, country, birth_year):
     prompt = f"""
     Scrivi una storia originale di circa 1000 parole su una persona immaginaria di nome {name},
@@ -67,7 +67,6 @@ def generate_occult_story(name, country, birth_year):
 
     return response.choices[0].message.content
 
-# Genera immagine del personaggio
 def generate_character_image(name, country, birth_year, gender, filename_jpg):
     if birth_year < 1800:
         style = (
@@ -78,7 +77,7 @@ def generate_character_image(name, country, birth_year, gender, filename_jpg):
     elif birth_year <= 1930:
         style = (
             f"A black and white vintage photograph of a {'man' if gender == 'uomo' else 'woman'} named {name}, born in {country} in {birth_year}. "
-            "Sitting in a dark cemetery, or in a study or  in an old library or in a dark room, wearing period-appropriate clothes, with a mysterious expression and occult hints in the background."
+            "Sitting in a dark cemetery, or in a study or in an old library or in a dark room, wearing period-appropriate clothes, with a mysterious expression and occult hints in the background."
         )
     else:
         style = (
@@ -108,12 +107,18 @@ def generate_character_image(name, country, birth_year, gender, filename_jpg):
     print(f"✅ Immagine salvata: {filename_jpg}")
     return filename_jpg
 
-# Crea file Markdown localmente
 def create_markdown(name, description, image_path, story_text):
     filename = f"{slugify(name)}.md"
     pub_date = datetime.today().strftime('%b %d %Y')
 
-    frontmatter = f"""---\ntitle: '{name}'\ndescription: '{description}'\npubDate: '{pub_date}'\nheroImage: '{image_path}'\n---\n\n"""
+    frontmatter = f"""---
+title: '{name}'
+description: '{description}'
+pubDate: '{pub_date}'
+heroImage: '{image_path}'
+---
+
+"""
 
     with open(filename, "w", encoding="utf-8") as f:
         f.write(frontmatter + story_text)
@@ -121,8 +126,7 @@ def create_markdown(name, description, image_path, story_text):
     print(f"✅ File generato: {filename}")
     return filename
 
-# Carica file su GitHub via API
-def upload_to_github(repo_owner, repo_name, path_in_repo, file_path_local, commit_message):
+def upload_to_github(repo_owner, repo_name, path_in_repo, file_path_local, commit_message, branch="main"):
     with open(file_path_local, "rb") as f:
         content = f.read()
         content_base64 = base64.b64encode(content).decode("utf-8")
@@ -135,14 +139,13 @@ def upload_to_github(repo_owner, repo_name, path_in_repo, file_path_local, commi
         "Accept": "application/vnd.github+json"
     }
 
-    # Controlla se file già esiste (serve SHA per overwrite)
-    response = requests.get(url, headers=headers)
+    response = requests.get(url + f"?ref={branch}", headers=headers)
     sha = response.json().get("sha") if response.status_code == 200 else None
 
     payload = {
         "message": commit_message,
         "content": content_base64,
-        "branch": "main"
+        "branch": branch
     }
     if sha:
         payload["sha"] = sha
@@ -160,23 +163,20 @@ if __name__ == "__main__":
     name, country, birth_year, gender = generate_random_profile()
     description = f"Occultista {country.lower()}"
     image_filename = f"{slugify(name)}.jpg"
-    image_path = f"/assets/{image_filename}"  # Path usato nel frontmatter markdown
+    image_path = f"../../assets/{image_filename}"
+    markdown_filename = f"{slugify(name)}.md"
 
     story = generate_occult_story(name, country, birth_year)
     generate_character_image(name, country, birth_year, gender, image_filename)
-    markdown_filename = create_markdown(name, description, image_path, story)
-    print(f"TOKEN USATO: {os.getenv('GITHUB_TOKEN')[:10]}...")
-
-    # Caricamento su GitHub
-    REPO_OWNER = "renatotelefono"   # <-- modifica qui
-    REPO_NAME = "openai_api_python"     # <-- modifica qui
+    create_markdown(name, description, image_path, story)
 
     upload_to_github(
         repo_owner=REPO_OWNER,
         repo_name=REPO_NAME,
         path_in_repo=f"src/content/blog/{markdown_filename}",
         file_path_local=markdown_filename,
-        commit_message=f"Aggiunta storia: {name}"
+        commit_message=f"Aggiunta storia: {name}",
+        branch="master"
     )
 
     upload_to_github(
@@ -184,5 +184,6 @@ if __name__ == "__main__":
         repo_name=REPO_NAME,
         path_in_repo=f"src/assets/{image_filename}",
         file_path_local=image_filename,
-        commit_message=f"Aggiunta immagine: {name}"
+        commit_message=f"Aggiunta immagine: {name}",
+        branch="master"
     )

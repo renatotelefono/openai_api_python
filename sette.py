@@ -169,14 +169,15 @@ if __name__ == "__main__":
 
     # Caricamento su GitHub
     REPO_OWNER = "renatotelefono"   # <-- modifica qui
-    REPO_NAME = "openai_api_python"     # <-- modifica qui
+    REPO_NAME = "astro_9"     # <-- modifica qui
 
     upload_to_github(
         repo_owner=REPO_OWNER,
         repo_name=REPO_NAME,
         path_in_repo=f"src/content/blog/{markdown_filename}",
         file_path_local=markdown_filename,
-        commit_message=f"Aggiunta storia: {name}"
+        commit_message=f"Aggiunta storia: {name}",
+        branch="master"
     )
 
     upload_to_github(
@@ -184,5 +185,6 @@ if __name__ == "__main__":
         repo_name=REPO_NAME,
         path_in_repo=f"src/assets/{image_filename}",
         file_path_local=image_filename,
-        commit_message=f"Aggiunta immagine: {name}"
+        commit_message=f"Aggiunta immagine: {name}",
+        branch="master"
     )
